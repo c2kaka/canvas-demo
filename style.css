@@ -1,0 +1,23 @@
+#canvas{
+    background: lightgrey;
+    display: block;
+}
+.actions{
+    position: fixed;
+    left:0;
+    bottom:0;
+}
+
+.actions>#brush{
+    display: none;
+}
+
+.actions.eraserEnable >#brush{
+    display: inline-block;
+}
+.actions.eraserEnable >#eraser{
+    display: none;
+}
+body{
+    margin:0;
+}
