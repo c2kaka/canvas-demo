@@ -8,6 +8,15 @@
     bottom:0;
 }
 
+.actions>button{
+    height: 60px;
+    width: 80px;
+    border-radius: 10px;
+    background: #1a1b1c;
+    color:white;
+    border:1px solid white;
+}
+
 .actions>#brush{
     display: none;
 }
