@@ -3,7 +3,7 @@ let context=myCanvas.getContext("2d");
 let using=false;
 let lastPosition={x:undefined,y:undefined};
 setCanvasSize();
-
+listenToUser();
 window.onresize=function () {
     setCanvasSize();
 }
@@ -30,36 +30,80 @@ function drawLine(lastP,currentP)
     context.stroke();
 }
 
-myCanvas.onmousedown=function (e) {
-    using=true;
-    const x=e.clientX;
-    const y=e.clientY;
-    if(!eraserEnabled){
-        drawCircle(x,y);
-        lastPosition.x=x;
-        lastPosition.y=y;
-    } else {
-      context.clearRect(x-5,y-5,20,20);
+function listenToUser() {
+    if(document.body.ontouchstart===undefined){
+        listenToMouse();
+    }else {
+        listenToTouch();
     }
-};
-myCanvas.onmousemove=function (e) {
-    if(using){
+}
+
+function listenToTouch(){
+    myCanvas.ontouchstart=function (e) {
+        using=true;
+        const x=e.touches[0].clientX;
+        const y=e.touches[0].clientY;
+        if(!eraserEnabled){
+            drawCircle(x,y);
+            lastPosition.x=x;
+            lastPosition.y=y;
+        } else {
+            context.clearRect(x-5,y-5,20,20);
+        }
+    };
+
+    myCanvas.ontouchmove=function (e) {
+        if(using){
+            const x=e.touches[0].clientX;
+            const y=e.touches[0].clientY;
+            if(!eraserEnabled){
+                drawCircle(x,y);
+                const currentPosition={x:x,y:y};
+                drawLine(lastPosition,currentPosition);
+                lastPosition=currentPosition;
+            }else{
+                context.clearRect(x-5,y-5,20,20);
+            }
+        }
+    }
+
+    myCanvas.ontouchend=function (e) {
+        using=false;
+    }
+}
+
+function listenToMouse(){
+    myCanvas.onmousedown=function (e) {
+        using=true;
         const x=e.clientX;
         const y=e.clientY;
         if(!eraserEnabled){
             drawCircle(x,y);
-            const currentPosition={x:x,y:y};
-            drawLine(lastPosition,currentPosition);
-            lastPosition=currentPosition;
-        }else{
+            lastPosition.x=x;
+            lastPosition.y=y;
+        } else {
             context.clearRect(x-5,y-5,20,20);
         }
-    }
-};
+    };
+    myCanvas.onmousemove=function (e) {
+        if(using){
+            const x=e.clientX;
+            const y=e.clientY;
+            if(!eraserEnabled){
+                drawCircle(x,y);
+                const currentPosition={x:x,y:y};
+                drawLine(lastPosition,currentPosition);
+                lastPosition=currentPosition;
+            }else{
+                context.clearRect(x-5,y-5,20,20);
+            }
+        }
+    };
 
-myCanvas.onmouseup=function (e) {
-    using=false;
-};
+    myCanvas.onmouseup=function (e) {
+        using=false;
+    };
+}
 
 let divActions=document.getElementById("actions");
 let eraser=document.getElementById("eraser");
