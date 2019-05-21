@@ -2,6 +2,7 @@ let myCanvas=document.getElementById("canvas");
 let context=myCanvas.getContext("2d");
 let using=false;
 let lastPosition={x:undefined,y:undefined};
+let lineWidth = 5;
 setCanvasSize();
 listenToUser();
 window.onresize=function () {
@@ -15,14 +16,14 @@ function setCanvasSize() {
 
 function drawCircle(x,y) {
     context.beginPath();
-    context.arc(x,y,5,0,Math.PI*2);
+    context.arc(x,y,lineWidth/2,0,Math.PI*2);
     context.fill();
 }
 
 function drawLine(lastP,currentP)
 {
     context.beginPath();
-    context.lineWidth = 10;
+    context.lineWidth = lineWidth;
     context.moveTo(lastP.x, lastP.y);
     context.lineTo(currentP.x, currentP.y);
     context.stroke();
@@ -143,3 +144,24 @@ blue.onclick=function (e) {
     blue.classList.add("active");
 };
 
+thin.onclick=function () {
+    lineWidth=5;
+};
+
+thick.onclick=function () {
+    lineWidth=10;
+};
+
+clear.onclick=function () {
+    context.clearRect(0,0,myCanvas.clientWidth,myCanvas.clientHeight);
+};
+
+save.onclick=function (e) {
+  let url=myCanvas.toDataURL("img/png");
+  let a=document.createElement("a");
+  document.body.appendChild(a);
+  a.href=url;
+  a.target="_blank";
+  a.download="canvas";
+  a.click();
+};
