@@ -16,14 +16,12 @@ function setCanvasSize() {
 function drawCircle(x,y) {
     context.beginPath();
     context.arc(x,y,5,0,Math.PI*2);
-    context.fillStyle="red";
     context.fill();
 }
 
 function drawLine(lastP,currentP)
 {
     context.beginPath();
-    context.strokeStyle = "red";
     context.lineWidth = 10;
     context.moveTo(lastP.x, lastP.y);
     context.lineTo(currentP.x, currentP.y);
@@ -110,13 +108,38 @@ let eraser=document.getElementById("eraser");
 let brush=document.getElementById("brush");
 let eraserEnabled=false;
 eraser.onclick=function (e) {
-    divActions.classList.add("eraserEnable");
     eraserEnabled=true;
+    eraser.classList.add("active");
+    brush.classList.remove("active");
 };
 
 brush.onclick=function (e) {
-    divActions.classList.remove("eraserEnable");
     eraserEnabled=false;
-}
+    brush.classList.add("active");
+    eraser.classList.remove("active");
+};
 
+red.onclick=function (e) {
+    context.fillStyle="red";
+    context.strokeStyle="red";
+    red.classList.add("active");
+    green.classList.remove("active");
+    blue.classList.remove("active");
+};
+
+green.onclick=function (e) {
+    context.fillStyle="green";
+    context.strokeStyle="green";
+    green.classList.add("active");
+    red.classList.remove("active");
+    blue.classList.remove("active");
+};
+
+blue.onclick=function (e) {
+    context.fillStyle="blue";
+    context.strokeStyle="blue";
+    red.classList.remove("active");
+    green.classList.remove("active");
+    blue.classList.add("active");
+};
 

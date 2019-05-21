@@ -5,12 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>canvas-demo</title>
     <link rel="stylesheet" href="style.css">
+    <script src="//at.alicdn.com/t/font_1202147_3uket6nxqug.js"></script>
 </head>
 <body>
     <canvas id="canvas" height="300" width="300"></canvas>
     <div id="actions" class="actions">
-        <button id="eraser">橡皮擦</button>
-        <button id="brush">画笔</button>
+        <svg id="brush" class="icon active" aria-hidden="true">
+            <use xlink:href="#icon-cc-pencil"></use>
+        </svg>
+        <svg id="eraser" class="icon" aria-hidden="true">
+            <use xlink:href="#icon-ERASER"></use>
+        </svg>
+    </div>
+
+    <div class="colors">
+        <ol>
+            <li id="red"></li>
+            <li id="green"></li>
+            <li id="blue"></li>
+        </ol>
     </div>
     <script src="main.js"></script>
 </body>
